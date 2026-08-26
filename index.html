@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Using AI to Rebuild Your Pool's Website — Session Resources</title>
+<meta name="description" content="Resource hub for the OMAG conference session: Using AI to Rebuild Your Pool's Website. Tools, before/after case study, and takeaways.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blueprint-navy: #16324f;
+    --blueprint-navy-deep: #0e2338;
+    --blueprint-line: #6f9fc4;
+    --blueprint-line-soft: rgba(168, 197, 220, 0.35);
+    --blueprint-white: #eaf2f8;
+    --paper: #efe8d6;
+    --paper-dark: #e4dac1;
+    --brass: #b8863b;
+    --brass-dark: #93692c;
+    --ink: #1c1a15;
+    --ink-soft: #4a4638;
+    --radius: 2px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Serif 4', Georgia, serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.mono{
+    font-family:'Space Grotesk', sans-serif;
+  }
+
+  .label{
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+
+  a{color:inherit;}
+
+  /* ============ HERO — BLUEPRINT ============ */
+  .hero{
+    position:relative;
+    background:
+      linear-gradient(var(--blueprint-navy-deep), var(--blueprint-navy) 40%, var(--blueprint-navy));
+    color:var(--blueprint-white);
+    overflow:hidden;
+    padding:0;
+    border-bottom:6px solid var(--brass);
+  }
+
+  .grid-overlay{
+    position:absolute;
+    inset:0;
+    background-image:
+      linear-gradient(var(--blueprint-line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--blueprint-line-soft) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity:0;
+    animation: fadeGrid 1.4s ease-out 0.2s forwards;
+  }
+
+  .grid-overlay.major{
+    background-image:
+      linear-gradient(var(--blueprint-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--blueprint-line) 1px, transparent 1px);
+    background-size: 200px 200px;
+    opacity:0;
+    animation: fadeGrid 1.4s ease-out 0.5s forwards;
+  }
+
+  @keyframes fadeGrid{
+    from{opacity:0;}
+    to{opacity:0.5;}
+  }
+
+  .hero-inner{
+    position:relative;
+    z-index:2;
+    max-width:1100px;
+    margin:0 auto;
+    padding:96px 32px 64px;
+  }
+
+  .eyebrow{
+    font-size:0.8rem;
+    color:var(--blueprint-line);
+    margin:0 0 18px;
+    opacity:0;
+    animation: riseIn 0.7s ease-out 0.9s forwards;
+  }
+
+  .eyebrow::before{
+    content:"◆ ";
+    color:var(--brass);
+  }
+
+  .hero h1{
+    font-size:clamp(2.2rem, 6vw, 4.2rem);
+    line-height:1.05;
+    font-weight:700;
+    margin:0 0 20px;
+    max-width:14ch;
+    opacity:0;
+    animation: riseIn 0.8s ease-out 1.05s forwards;
+  }
+
+  .hero-sub{
+    font-family:'Source Serif 4', serif;
+    font-size:1.15rem;
+    color:var(--blueprint-white);
+    opacity:0;
+    max-width:52ch;
+    animation: riseIn 0.8s ease-out 1.25s forwards;
+  }
+
+  .hero-sub b{color:var(--brass);}
+
+  @keyframes riseIn{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .grid-overlay, .grid-overlay.major, .eyebrow, .hero h1, .hero-sub, .title-block{
+      animation:none !important;
+      opacity:1 !important;
+      transform:none !important;
+    }
+  }
+
+  /* Title block — bottom right corner, like a real drawing sheet */
+  .title-block{
+    position:relative;
+    z-index:2;
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 32px 40px;
+    display:flex;
+    justify-content:flex-end;
+    opacity:0;
+    animation: riseIn 0.8s ease-out 1.45s forwards;
+  }
+
+  .title-block table{
+    border-collapse:collapse;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    color:var(--blueprint-white);
+    border:1px solid var(--blueprint-line);
+    background:rgba(10,25,40,0.4);
+  }
+
+  .title-block td{
+    border:1px solid var(--blueprint-line-soft);
+    padding:6px 12px;
+    white-space:nowrap;
+  }
+
+  .title-block .tb-label{
+    color:var(--blueprint-line);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    font-size:0.62rem;
+  }
+
+  /* ============ SHEETS (sections) ============ */
+  main{
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  .sheet{
+    padding:72px 0;
+    border-bottom:1px solid rgba(28,26,21,0.12);
+  }
+
+  .sheet:last-of-type{border-bottom:none;}
+
+  .sheet-head{
+    display:flex;
+    align-items:baseline;
+    gap:18px;
+    margin-bottom:12px;
+  }
+
+  .sheet-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.85rem;
+    color:var(--brass-dark);
+    border:1px solid var(--brass);
+    padding:3px 9px;
+    border-radius:var(--radius);
+    flex-shrink:0;
+  }
+
+  .sheet-head h2{
+    font-size:1.7rem;
+    margin:0;
+    font-weight:600;
+  }
+
+  .sheet-desc{
+    color:var(--ink-soft);
+    max-width:62ch;
+    margin:0 0 36px;
+  }
+
+  /* Resource cards */
+  .card-row{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:20px;
+  }
+
+  .card{
+    display:block;
+    text-decoration:none;
+    background:var(--blueprint-white);
+    border:1px solid rgba(22,50,79,0.18);
+    border-radius:var(--radius);
+    padding:26px 24px;
+    position:relative;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+
+  .card:hover, .card:focus-visible{
+    transform:translateY(-3px);
+    border-color:var(--blueprint-navy);
+    box-shadow:0 10px 24px rgba(22,50,79,0.15);
+    outline:none;
+  }
+
+  .card:focus-visible{
+    outline:2px solid var(--brass);
+    outline-offset:3px;
+  }
+
+  .card-icon{
+    width:34px; height:34px;
+    margin-bottom:16px;
+    color:var(--blueprint-navy);
+  }
+
+  .card h3{
+    margin:0 0 8px;
+    font-size:1.08rem;
+    color:var(--blueprint-navy);
+  }
+
+  .card p{
+    margin:0;
+    font-size:0.92rem;
+    color:var(--ink-soft);
+  }
+
+  .card .go{
+    display:inline-block;
+    margin-top:14px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    color:var(--brass-dark);
+    letter-spacing:0.04em;
+  }
+
+  .card .go::after{content:" →";}
+
+  /* Before/after comparison */
+  .compare{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+    border:1px solid rgba(22,50,79,0.25);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+
+  @media (max-width:640px){
+    .compare{grid-template-columns:1fr;}
+  }
+
+  .compare-panel{
+    padding:28px 26px;
+    position:relative;
+  }
+
+  .compare-panel.before{
+    background:#e7e0cb;
+    border-right:1px dashed var(--brass);
+  }
+
+  .compare-panel.after{
+    background:var(--blueprint-white);
+  }
+
+  .compare-tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.68rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    padding:3px 9px;
+    border-radius:var(--radius);
+    display:inline-block;
+    margin-bottom:14px;
+  }
+
+  .compare-panel.before .compare-tag{
+    color:#7a5a1f;
+    background:rgba(184,134,59,0.18);
+  }
+
+  .compare-panel.after .compare-tag{
+    color:var(--blueprint-navy);
+    background:rgba(22,50,79,0.12);
+  }
+
+  .compare-panel h3{
+    margin:0 0 8px;
+    font-size:1rem;
+    color:var(--ink);
+  }
+
+  .compare-panel p{
+    margin:0 0 16px;
+    font-size:0.9rem;
+    color:var(--ink-soft);
+  }
+
+  .compare-panel a.linkout{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+    color:var(--blueprint-navy);
+    text-decoration:underline;
+    text-underline-offset:3px;
+  }
+
+  .compare-panel.before a.linkout{color:var(--brass-dark);}
+
+  /* Placeholder cards */
+  .card.placeholder{
+    background:repeating-linear-gradient(
+      135deg,
+      rgba(22,50,79,0.04),
+      rgba(22,50,79,0.04) 8px,
+      transparent 8px,
+      transparent 16px
+    );
+    border:1px dashed rgba(22,50,79,0.35);
+    cursor:default;
+  }
+
+  .card.placeholder:hover{
+    transform:none;
+    box-shadow:none;
+    border-color:rgba(22,50,79,0.35);
+  }
+
+  .card.placeholder .status{
+    display:inline-block;
+    margin-top:14px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.68rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--brass-dark);
+  }
+
+  .card.placeholder .status::before{
+    content:"● ";
+  }
+
+  /* Footer */
+  footer{
+    background:var(--blueprint-navy-deep);
+    color:var(--blueprint-line);
+    padding:36px 32px;
+    text-align:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.75rem;
+    letter-spacing:0.04em;
+  }
+
+  footer strong{color:var(--blueprint-white);}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="grid-overlay"></div>
+  <div class="grid-overlay major"></div>
+  <div class="hero-inner">
+    <p class="eyebrow label">AGRiP Conference Session · Resource Hub</p>
+    <h1>Using AI to Rebuild<br>Your Pool's Website</h1>
+    <p class="hero-sub">Everything from the session in one place — the audit tool, a live before/after, and the framework you can take home to run this on <b>your</b> pool's site.</p>
+  </div>
+  <div class="title-block">
+    <table>
+      <tr>
+        <td class="tb-label">Session</td>
+        <td>Using AI to Rebuild Your Pool's Website</td>
+        <td class="tb-label">Sheet</td>
+        <td>01 of 01</td>
+      </tr>
+      <tr>
+        <td class="tb-label">Presented by</td>
+        <td>OMAG — Oklahoma Municipal Assurance Group</td>
+        <td class="tb-label">Scale</td>
+        <td>N.T.S.</td>
+      </tr>
+    </table>
+  </div>
+</header>
+
+<main>
+
+  <section class="sheet" id="tool">
+    <div class="sheet-head">
+      <span class="sheet-num">SHEET 01</span>
+      <h2>The Tool</h2>
+    </div>
+    <p class="sheet-desc">The FIND Audit Prompt Builder turns the framework from this session into a ready-to-run prompt — point it at any member-facing page and get a structured audit back.</p>
+    <div class="card-row">
+      <a class="card" href="https://omag-web.github.io/audit-prompt-builder/" target="_blank" rel="noopener">
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="1"></rect><path d="M3 9h18"></path><path d="M8 4v5"></path><circle cx="12.5" cy="13.5" r="2.5"></circle><path d="M16 17l2 2"></path></svg>
+        <h3>FIND Audit Prompt Builder</h3>
+        <p>Run a Findable / Intuitive / Necessary / Directed audit on any page in minutes.</p>
+        <span class="go">Open the tool</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="sheet" id="case-study">
+    <div class="sheet-head">
+      <span class="sheet-num">SHEET 02</span>
+      <h2>Case Study — Before &amp; After</h2>
+    </div>
+    <p class="sheet-desc">The risk resources page, run through the exact process covered in this session. Open both and see what the FIND framework actually changed.</p>
+    <div class="compare">
+      <div class="compare-panel before">
+        <span class="compare-tag label">Before</span>
+        <h3>Old Risk Management Page</h3>
+        <p>The original layout — the starting point for the audit.</p>
+        <a class="linkout" href="https://www.omag.org/sewer-resources-old" target="_blank" rel="noopener">View old page →</a>
+      </div>
+      <div class="compare-panel after">
+        <span class="compare-tag label">After</span>
+        <h3>Updated Risk Management Page</h3>
+        <p>Rebuilt using the framework — live on omag.org today.</p>
+        <a class="linkout" href="https://www.omag.org/risk-resources" target="_blank" rel="noopener">View updated page →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet" id="take-home">
+    <div class="sheet-head">
+      <span class="sheet-num">SHEET 03</span>
+      <h2>Take It With You</h2>
+    </div>
+    <p class="sheet-desc">Materials to keep running this after the session ends.</p>
+    <div class="card-row">
+      <div class="card placeholder">
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><path d="M4 19h16"></path></svg>
+        <h3>Claude Skill — FIND Framework</h3>
+        <p>A downloadable skill that runs the same audit process locally.</p>
+        <span class="status">Posting after the session</span>
+      </div>
+      <div class="card placeholder">
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="1"></rect><path d="M8 21h8"></path><path d="M12 18v3"></path></svg>
+        <h3>Session Slides</h3>
+        <p>The full deck from today's presentation.</p>
+        <span class="status">Posting after the session</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <strong>OMAG</strong> — Oklahoma Municipal Assurance Group · This page is a resource hub for conference attendees
+</footer>
+
+</body>
+</html>

@@ -276,69 +276,622 @@
 
   .card .go::after{content:" →";}
 
-  /* ============ EMBEDDED TOOL ============ */
-  .tool-frame{
-    border:1px solid var(--blueprint-navy);
+  /* ============ FIND AUDIT PROMPT BUILDER (native) ============
+     Everything is scoped under #builder so it can't collide with the
+     hub's own .card / .label styles. */
+  #builder [hidden]{display:none !important;}
+
+  .fb{
+    display:grid;
+    grid-template-columns:260px minmax(0, 1fr);
+    gap:28px;
+    align-items:start;
+  }
+
+  @media (max-width:860px){
+    .fb{grid-template-columns:1fr; gap:18px;}
+  }
+
+  /* --- Rail: FIND tracker + progress, styled as a drawing legend --- */
+  #builder .fb-rail{
+    position:sticky;
+    top:24px;
+    background:var(--blueprint-navy);
+    color:var(--blueprint-white);
     border-radius:var(--radius);
-    background:var(--blueprint-white);
-    box-shadow:0 10px 30px rgba(22,50,79,0.12);
+    padding:22px 20px;
+    border-bottom:4px solid var(--brass);
+    background-image:
+      linear-gradient(var(--blueprint-line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--blueprint-line-soft) 1px, transparent 1px);
+    background-size:24px 24px;
+    background-color:var(--blueprint-navy);
+  }
+
+  @media (max-width:860px){
+    #builder .fb-rail{position:static; padding:18px 16px;}
+  }
+
+  #builder .fb-rail-label{
+    margin:0 0 14px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.68rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--blueprint-line);
+  }
+
+  #builder .fb-rail-label::before{content:"◆ "; color:var(--brass);}
+
+  #builder .find-tracker{
+    list-style:none;
+    margin:0 0 18px;
+    padding:0;
+    display:grid;
+    gap:8px;
+  }
+
+  @media (max-width:860px){
+    #builder .find-tracker{grid-template-columns:repeat(4, 1fr); gap:6px;}
+  }
+
+  #builder .find-letter{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:8px 10px;
+    border:1px solid rgba(168,197,220,0.25);
+    border-radius:var(--radius);
+    background:rgba(10,25,40,0.35);
+    transition:background 0.2s ease, border-color 0.2s ease;
+  }
+
+  @media (max-width:860px){
+    #builder .find-letter{flex-direction:column; gap:6px; padding:8px 4px; text-align:center;}
+  }
+
+  #builder .letter-glyph{
+    width:30px; height:30px;
+    flex-shrink:0;
+    display:grid;
+    place-items:center;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:1rem;
+    border:1px solid var(--blueprint-line);
+    border-radius:var(--radius);
+    color:var(--blueprint-white);
+  }
+
+  #builder .letter-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.04em;
+    color:var(--blueprint-line);
+  }
+
+  @media (max-width:860px){
+    #builder .letter-label{font-size:0.6rem;}
+  }
+
+  #builder .find-letter.is-clean{border-color:rgba(168,197,220,0.5);}
+  #builder .find-letter.is-clean .letter-glyph{background:rgba(234,242,248,0.12);}
+  #builder .find-letter.is-clean .letter-label{color:var(--blueprint-white);}
+
+  #builder .find-letter.is-flagged{
+    background:rgba(184,134,59,0.18);
+    border-color:var(--brass);
+  }
+  #builder .find-letter.is-flagged .letter-glyph{
+    background:var(--brass);
+    border-color:var(--brass);
+    color:var(--blueprint-navy-deep);
+  }
+  #builder .find-letter.is-flagged .letter-label{color:#e6c48a; font-weight:700;}
+
+  #builder .step-progress{
+    height:4px;
+    background:rgba(168,197,220,0.25);
+    border-radius:2px;
     overflow:hidden;
   }
 
-  .tool-frame-bar{
+  #builder .step-progress-fill{
+    height:100%;
+    width:25%;
+    background:var(--brass);
+    transition:width 0.35s ease;
+  }
+
+  #builder .step-caption{
+    margin:10px 0 0;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    color:var(--blueprint-white);
+  }
+
+  #builder .fb-rail-note{
+    margin:16px 0 0;
+    padding-top:14px;
+    border-top:1px dashed rgba(168,197,220,0.35);
+    font-size:0.84rem;
+    line-height:1.5;
+    color:rgba(234,242,248,0.85);
+  }
+
+  #builder .fb-rail-note b{color:#e6c48a; font-weight:600;}
+
+  @media (max-width:860px){
+    #builder .fb-rail-note{display:none;}
+  }
+
+  /* --- Panels --- */
+  #builder .fb-panel{
+    background:var(--blueprint-white);
+    border:1px solid rgba(22,50,79,0.2);
+    border-radius:var(--radius);
+    padding:28px 28px 26px;
+  }
+
+  @media (max-width:640px){
+    #builder .fb-panel{padding:22px 18px;}
+  }
+
+  #builder .fb-panel h2{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:1.35rem;
+    font-weight:600;
+    color:var(--blueprint-navy);
+    margin:0 0 6px;
+  }
+
+  #builder .card-hint{
+    margin:0 0 20px;
+    color:var(--ink-soft);
+    font-size:0.95rem;
+  }
+
+  #builder .visually-hidden{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+
+  #builder fieldset{border:0; margin:0; padding:0; min-width:0;}
+
+  /* Page chips */
+  #builder .chip-group{
     display:flex;
-    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:20px;
+  }
+
+  #builder .chip,
+  #builder .answer-btn{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:0.92rem;
+    font-weight:500;
+    padding:9px 16px;
+    border:1px solid rgba(22,50,79,0.35);
+    border-radius:var(--radius);
+    background:#fff;
+    color:var(--blueprint-navy);
+    cursor:pointer;
+    transition:background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+
+  #builder .chip:hover,
+  #builder .answer-btn:hover{border-color:var(--blueprint-navy);}
+
+  #builder .chip.is-selected,
+  #builder .answer-btn.is-selected{
+    background:var(--blueprint-navy);
+    border-color:var(--blueprint-navy);
+    color:var(--blueprint-white);
+  }
+
+  #builder .answer-btn.is-selected[data-answer="No"],
+  #builder .answer-btn.is-selected[data-answer="Not sure"]{
+    background:var(--brass);
+    border-color:var(--brass);
+    color:var(--blueprint-navy-deep);
+  }
+
+  #builder .chip:focus-visible,
+  #builder .answer-btn:focus-visible,
+  #builder .btn:focus-visible,
+  #builder .link-btn:focus-visible,
+  #builder .icon-btn:focus-visible,
+  #builder summary:focus-visible{
+    outline:2px solid var(--brass);
+    outline-offset:2px;
+  }
+
+  /* Fields */
+  #builder .field-group{margin-bottom:18px;}
+
+  #builder .field-group label{
+    display:block;
+    margin-bottom:6px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--blueprint-navy);
+  }
+
+  #builder .optional-tag{color:var(--ink-soft); text-transform:none; letter-spacing:0;}
+
+  #builder input[type="text"],
+  #builder input[type="url"]{
+    width:100%;
+    font:inherit;
+    font-size:1rem;
+    padding:11px 12px;
+    border:1px solid rgba(22,50,79,0.35);
+    border-radius:var(--radius);
+    background:#fff;
+    color:var(--ink);
+  }
+
+  #builder input[type="text"]:focus,
+  #builder input[type="url"]:focus{
+    outline:2px solid var(--brass);
+    outline-offset:1px;
+    border-color:var(--blueprint-navy);
+  }
+
+  /* Disclosures */
+  #builder .find-info{
+    border-top:1px dashed rgba(22,50,79,0.25);
+    padding:12px 0 0;
+    margin-top:12px;
+  }
+
+  #builder .find-info summary{
+    cursor:pointer;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    color:var(--blueprint-navy);
+    font-size:0.95rem;
+  }
+
+  #builder .find-info[open] summary{margin-bottom:12px;}
+
+  #builder .find-info-list{margin:0; display:grid; gap:10px;}
+  #builder .find-info-list div{display:grid; grid-template-columns:96px 1fr; gap:10px;}
+  #builder .find-info-list dt{font-family:'JetBrains Mono', monospace; font-size:0.78rem; color:var(--brass-dark); padding-top:2px;}
+  #builder .find-info-list dd{margin:0; font-size:0.92rem; color:var(--ink-soft);}
+
+  @media (max-width:520px){
+    #builder .find-info-list div{grid-template-columns:1fr; gap:2px;}
+  }
+
+  #builder .example-prompt-note{font-size:0.85rem; color:var(--ink-soft); margin:0 0 10px;}
+
+  #builder .example-prompt-pre,
+  #builder .prompt-output{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+    line-height:1.6;
+    color:var(--ink);
+    background:#fff;
+    border:1px solid rgba(22,50,79,0.25);
+    border-radius:var(--radius);
+    padding:14px 16px;
+  }
+
+  #builder .example-prompt-pre{
+    white-space:pre-wrap;
+    word-break:break-word;
+    max-height:340px;
+    overflow-y:auto;
+    margin:0;
+  }
+
+  /* Nav + buttons */
+  #builder .nav-row{
+    display:flex;
     justify-content:space-between;
     gap:12px;
-    flex-wrap:wrap;
-    background:var(--blueprint-navy);
-    color:var(--blueprint-white);
-    padding:10px 16px;
+    margin-top:16px;
+  }
+
+  #builder .nav-row-single{justify-content:flex-end;}
+
+  #builder .btn{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:0.95rem;
+    font-weight:600;
+    padding:12px 22px;
+    border-radius:var(--radius);
+    border:1px solid var(--blueprint-navy);
+    cursor:pointer;
+    transition:background 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+  }
+
+  #builder .btn-primary{background:var(--blueprint-navy); color:var(--blueprint-white);}
+  #builder .btn-primary:hover:not(:disabled){background:var(--blueprint-navy-deep);}
+  #builder .btn-primary:disabled{opacity:0.4; cursor:not-allowed;}
+  #builder .btn-ghost{background:transparent; color:var(--blueprint-navy);}
+  #builder .btn-ghost:hover{background:rgba(22,50,79,0.06);}
+
+  #builder .link-btn{
+    background:none;
+    border:0;
+    padding:0;
     font-family:'JetBrains Mono', monospace;
-    font-size:0.7rem;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-  }
-
-  .tool-frame-bar .detail::before{
-    content:"◆ ";
-    color:var(--brass);
-  }
-
-  .tool-frame-bar a{
-    color:var(--blueprint-line);
-    text-decoration:none;
-  }
-
-  .tool-frame-bar a:hover,
-  .tool-frame-bar a:focus-visible{
-    color:var(--blueprint-white);
+    font-size:0.75rem;
+    color:var(--brass-dark);
     text-decoration:underline;
     text-underline-offset:3px;
+    cursor:pointer;
   }
 
-  .tool-frame iframe{
+  #builder .icon-btn{
+    background:none;
+    border:0;
+    font-size:1.2rem;
+    line-height:1;
+    padding:2px 6px;
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+
+  #builder .icon-btn:hover{color:var(--ink);}
+
+  /* Step 2: FIND questions */
+  #builder .find-question{
+    padding:16px 0;
+    border-bottom:1px solid rgba(22,50,79,0.12);
+  }
+
+  #builder .find-question:first-of-type{padding-top:4px;}
+
+  #builder .find-question-label{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    margin-bottom:12px;
+  }
+
+  #builder .find-question-letter{
+    width:34px; height:34px;
+    flex-shrink:0;
+    display:grid;
+    place-items:center;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    color:var(--blueprint-white);
+    background:var(--blueprint-navy);
+    border-radius:var(--radius);
+  }
+
+  #builder .find-question-title{
+    margin:0;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    color:var(--blueprint-navy);
+  }
+
+  #builder .find-question-text{margin:2px 0 0; font-size:0.95rem; color:var(--ink-soft);}
+
+  #builder .answer-row{display:flex; gap:8px; flex-wrap:wrap; padding-left:48px;}
+
+  @media (max-width:520px){
+    #builder .answer-row{padding-left:0;}
+    #builder .answer-btn{flex:1;}
+  }
+
+  #builder .score-summary{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    margin-top:20px;
+    padding:16px 18px;
+    background:#fff;
+    border:1px solid var(--brass);
+    border-left-width:4px;
+    border-radius:var(--radius);
+  }
+
+  #builder .score-summary-number{
+    margin:0;
+    font-family:'Space Grotesk', sans-serif;
+    font-size:2.2rem;
+    font-weight:700;
+    line-height:1;
+    color:var(--blueprint-navy);
+  }
+
+  #builder .score-summary-max{font-size:1rem; color:var(--ink-soft);}
+  #builder .score-summary-text{margin:0; font-weight:600; color:var(--ink);}
+  #builder .score-summary-note{margin:4px 0 0; font-size:0.85rem; color:var(--ink-soft);}
+
+  /* Step 3: friction */
+  #builder .checkbox-group{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(210px, 1fr));
+    gap:8px;
+    margin-bottom:18px;
+  }
+
+  #builder .checkbox-chip{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 12px;
+    background:#fff;
+    border:1px solid rgba(22,50,79,0.3);
+    border-radius:var(--radius);
+    cursor:pointer;
+    font-size:0.95rem;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+
+  #builder .checkbox-chip:hover{border-color:var(--blueprint-navy);}
+
+  #builder .checkbox-chip.is-checked{
+    border-color:var(--blueprint-navy);
+    background:rgba(22,50,79,0.07);
+  }
+
+  #builder .checkbox-chip input{
+    width:18px; height:18px;
+    margin:0;
+    accent-color:var(--blueprint-navy);
+    flex-shrink:0;
+  }
+
+  #builder .share-toggle-row{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    padding:14px 16px;
+    background:#fff;
+    border:1px dashed rgba(22,50,79,0.35);
+    border-radius:var(--radius);
+  }
+
+  #builder .toggle-switch{position:relative; display:inline-block; flex-shrink:0; margin-top:2px;}
+
+  #builder .toggle-switch input{
+    position:absolute; inset:0;
+    opacity:0;
+    width:44px; height:26px;
+    margin:0;
+    cursor:pointer;
+    z-index:1;
+  }
+
+  #builder .toggle-track{
+    display:block;
+    width:44px; height:26px;
+    border-radius:13px;
+    background:rgba(22,50,79,0.25);
+    position:relative;
+    transition:background 0.2s ease;
+  }
+
+  #builder .toggle-thumb{
+    position:absolute;
+    top:3px; left:3px;
+    width:20px; height:20px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 1px 3px rgba(0,0,0,0.25);
+    transition:transform 0.2s ease;
+  }
+
+  #builder .toggle-switch input:checked + .toggle-track{background:var(--blueprint-navy);}
+  #builder .toggle-switch input:checked + .toggle-track .toggle-thumb{transform:translateX(18px);}
+  #builder .toggle-switch input:focus-visible + .toggle-track{outline:2px solid var(--brass); outline-offset:2px;}
+
+  #builder .share-toggle-title{margin:0; font-family:'Space Grotesk', sans-serif; font-weight:600; color:var(--blueprint-navy);}
+  #builder .share-toggle-sub{margin:2px 0 0; font-size:0.85rem; color:var(--ink-soft);}
+
+  /* Step 4: prompt output */
+  #builder .manual-entry-callout{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    border-left:3px solid var(--brass);
+    background:rgba(184,134,59,0.1);
+    border-radius:var(--radius);
+    padding:12px 14px;
+    margin:0 0 16px;
+  }
+
+  #builder .manual-entry-callout-icon{font-size:1.05rem; line-height:1.4; flex-shrink:0;}
+  #builder .manual-entry-callout p{margin:0; font-size:0.92rem; line-height:1.5;}
+
+  #builder .prompt-output-wrap{position:relative;}
+
+  #builder .prompt-output-wrap::before,
+  #builder .prompt-output-wrap::after{
+    content:"";
+    position:absolute;
+    left:1px; right:1px;
+    height:28px;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity 0.2s ease;
+  }
+
+  #builder .prompt-output-wrap::before{top:1px; background:linear-gradient(#fff, rgba(255,255,255,0));}
+  #builder .prompt-output-wrap::after{bottom:5px; background:linear-gradient(rgba(255,255,255,0), #fff);}
+  #builder .prompt-output-wrap.show-fade-top::before,
+  #builder .prompt-output-wrap.show-fade-bottom::after{opacity:1;}
+
+  #builder .prompt-output{
     display:block;
     width:100%;
-    height:900px; /* fallback until the frame reports its real height */
-    border:0;
-    background:transparent;
-    transition:height 0.25s ease;
+    resize:vertical;
+    min-height:320px;
   }
 
-  @media (prefers-reduced-motion: reduce){
-    .tool-frame iframe{transition:none;}
+  #builder .prompt-output:focus{outline:2px solid var(--brass); outline-offset:1px;}
+
+  #builder .copy-row{display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;}
+  #builder .copy-row .btn-primary{flex:1; min-width:180px;}
+
+  #builder .copy-confirm{
+    margin:10px 0 0;
+    min-height:1.2em;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.75rem;
+    color:var(--blueprint-navy);
+    opacity:0;
+    transition:opacity 0.2s ease;
   }
 
-  .tool-frame-note{
-    margin:14px 0 0;
-    font-size:0.85rem;
+  #builder .copy-confirm.is-visible{opacity:1;}
+
+  #builder .share-confirm{
+    margin:4px 0 0;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.75rem;
+    color:var(--brass-dark);
+  }
+
+  #builder .takeaway-strip{
+    margin:20px 0 0;
+    padding-top:16px;
+    border-top:1px dashed rgba(22,50,79,0.25);
+    text-align:center;
+    font-style:italic;
     color:var(--ink-soft);
   }
 
-  .tool-frame-note a{
-    color:var(--brass-dark);
-    text-underline-offset:3px;
+  /* Saved audits */
+  #builder .saved-audits-card{margin-top:20px;}
+
+  #builder .saved-audits-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+  }
+
+  #builder .saved-audits-list{list-style:none; margin:0; padding:0; display:grid; gap:8px;}
+
+  #builder .saved-audit-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    padding:10px 14px;
+    background:#fff;
+    border:1px solid rgba(22,50,79,0.2);
+    border-radius:var(--radius);
+  }
+
+  #builder .saved-audit-page{margin:0; font-family:'Space Grotesk', sans-serif; font-weight:600; color:var(--blueprint-navy);}
+  #builder .saved-audit-meta{margin:2px 0 0; font-family:'JetBrains Mono', monospace; font-size:0.72rem; color:var(--ink-soft);}
+  #builder .saved-audit-actions{display:flex; align-items:center; gap:8px; flex-shrink:0;}
+
+  @media (prefers-reduced-motion: reduce){
+    #builder *{transition:none !important;}
   }
 
   /* Before/after comparison */
@@ -494,20 +1047,301 @@
       <span class="sheet-num">SHEET 01</span>
       <h2>The Tool</h2>
     </div>
-    <p class="sheet-desc">The FIND Audit Prompt Builder turns the framework from this session into a ready-to-run prompt. Work through it right here: pick a member-facing page, score it, flag the friction, and copy a structured audit prompt into the AI tool of your choice.</p>
+    <p class="sheet-desc">The FIND Audit Prompt Builder turns one member-facing page into a ready-to-run AI audit prompt. Pick a page, score it against FIND, flag the friction, and copy the prompt into the AI tool of your choice.</p>
 
-    <div class="tool-frame" id="toolFrame">
-      <div class="tool-frame-bar">
-        <span class="detail">Detail A · FIND Audit Prompt Builder</span>
-        <a href="https://omag-web.github.io/audit-prompt-builder/" target="_blank" rel="noopener">Open full screen ↗</a>
+    <div class="fb" id="builder" data-find-builder>
+
+      <aside class="fb-rail" aria-label="Audit progress">
+        <p class="fb-rail-label">Audit progress</p>
+        <ul class="find-tracker" id="findTracker" aria-label="FIND Framework progress">
+          <li class="find-letter" data-letter="F" data-step="2"><span class="letter-glyph">F</span><span class="letter-label">Findable</span></li>
+          <li class="find-letter" data-letter="I" data-step="2"><span class="letter-glyph">I</span><span class="letter-label">Intuitive</span></li>
+          <li class="find-letter" data-letter="N" data-step="2"><span class="letter-glyph">N</span><span class="letter-label">Necessary</span></li>
+          <li class="find-letter" data-letter="D" data-step="2"><span class="letter-glyph">D</span><span class="letter-label">Directed</span></li>
+        </ul>
+        <div class="step-progress" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" aria-label="Builder step" id="stepProgress">
+          <div class="step-progress-fill" id="stepProgressFill"></div>
+        </div>
+        <p class="step-caption" id="stepCaption">Step 1 of 4 &middot; Choose a page</p>
+        <p class="fb-rail-note">A <b>No</b> or <b>Not sure</b> flags a letter in brass. Flags tell the AI where to dig.</p>
+      </aside>
+
+      <div class="fb-main">
+      <!-- STEP 1: Choose a Page -->
+      <section class="step" id="step1" data-step="1" aria-labelledby="step1-heading">
+        <div class="fb-panel">
+          <h2 id="step1-heading">Choose a page</h2>
+          <p class="card-hint">Think of one high-use page on your organization's website — one members actually rely on.</p>
+
+          <fieldset class="chip-group" id="pageChoices">
+            <legend class="visually-hidden">Select a page type</legend>
+            <button type="button" class="chip" data-value="Claims">Claims</button>
+            <button type="button" class="chip" data-value="Coverage">Coverage</button>
+            <button type="button" class="chip" data-value="Training">Training</button>
+            <button type="button" class="chip" data-value="Forms">Forms</button>
+            <button type="button" class="chip" data-value="Contact">Contact</button>
+            <button type="button" class="chip" data-value="Member Resources">Member Resources</button>
+            <button type="button" class="chip" data-value="Other">Other</button>
+          </fieldset>
+
+          <div class="field-group" id="otherPageWrap" hidden>
+            <label for="otherPageInput">Describe the page</label>
+            <input type="text" id="otherPageInput" placeholder="e.g. Board Meeting Minutes">
+          </div>
+
+          <div class="field-group">
+            <label for="pageUrl">Page URL <span class="optional-tag">(optional)</span></label>
+            <input type="url" id="pageUrl" placeholder="https://yourorganization.org/page">
+          </div>
+
+          <details class="find-info">
+            <summary>What is FIND?</summary>
+            <dl class="find-info-list">
+              <div><dt>Findable</dt><dd>Can members quickly locate this page without knowing your department structure?</dd></div>
+              <div><dt>Intuitive</dt><dd>Does the navigation and wording make sense without explanation?</dd></div>
+              <div><dt>Necessary</dt><dd>Does the content serve a clear member purpose?</dd></div>
+              <div><dt>Directed</dt><dd>Does the page clearly guide members to a next step?</dd></div>
+            </dl>
+          </details>
+
+          <details class="find-info">
+            <summary>See an example prompt</summary>
+            <p class="example-prompt-note">Based on a Claims page, no URL, flagged for outdated content and confusing navigation. Yours will reflect your own answers.</p>
+            <pre class="example-prompt-pre">Act as a website auditor for a public entity risk pool, insurance pool, or municipal association. Audit the page described below using the FIND Framework — evaluate it from the point of view of a busy member (a city clerk, public works director, HR staffer, finance officer, or risk manager) trying to get in, find what they need, and get out. Evaluate it from the member's point of view, not the organization's.
+
+## FIND Framework
+Findable: Can members quickly locate this page or information without needing to understand the organization's internal department structure?
+Intuitive: Does the navigation, wording, layout, and page structure make sense without explanation?
+Necessary: Does the content serve a clear member purpose, or is it outdated, duplicated, overly internal, or no longer useful?
+Directed: Does the page clearly guide members toward the next step — submitting a claim, registering for training, downloading a form, contacting the right person, accessing a resource?
+
+## Page being audited
+Page type: Claims
+Internal FIND pre-score: 2/4 (flagged: Findable, Directed)
+Focus areas flagged ahead of time: outdated content, confusing navigation.
+
+No URL was provided for this page.
+IMPORTANT: I will paste the page's text, HTML, or a screenshot directly below this prompt. Wait for that content before starting the audit — do not guess, assume, or invent what's on the page.
+
+## What to look for
+- Outdated or stale content
+- Internal language or organizational jargon
+- Department-centered structure instead of member-centered structure
+- Hidden or buried important information
+- Too many links or unclear navigation paths
+- Missing or vague calls to action
+- Confusing next steps
+- Inconsistent tone, formatting, or structure
+- Duplicated or conflicting information
+- Lack of plain language
+- Accessibility concerns (missing/unclear alt text, low color contrast, vague link text like "click here," heading structure that skips levels, form fields without visible labels)
+- Mobile usability concerns (small tap targets, horizontal scrolling, navigation that doesn't collapse on a phone width)
+- Content that may require legal, coverage, claims, or policy expert review
+
+## Output format
+Structure your response exactly like this:
+
+# Website Audit: [Page Name or URL]
+
+## Quick Summary
+2-3 sentences max, no throat-clearing. If you were only given partial information (no URL, or no pasted content), say so plainly with a ⚠ Unverified note — do not fill gaps with assumptions.
+
+## FIND Scorecard
+Findable: [Strong / Needs Attention / Weak / Unable to Determine] — 2-3 sentence explanation
+Intuitive: [Strong / Needs Attention / Weak / Unable to Determine] — 2-3 sentence explanation
+Necessary: [Strong / Needs Attention / Weak / Unable to Determine] — 2-3 sentence explanation
+Directed: [Strong / Needs Attention / Weak / Unable to Determine] — 2-3 sentence explanation
+
+## Issues Found
+- [fragment, not a paragraph]
+
+## Recommended Fixes
+High: [fragment]
+Medium: [fragment]
+Low: [fragment]
+
+## Human Review Needed
+- [anything touching legal, coverage, claims, or policy specifics — don't assess accuracy yourself, just flag it]
+
+## Suggested Rewrite
+Before: "[current copy]"
+After: "[revised copy]"
+
+Keep the whole audit tight enough to read in under a minute: fragments over full paragraphs, plain language throughout, and don't manufacture issues to fill out every section — if the page genuinely holds up well, say so and keep that section short.</pre>
+          </details>
+        </div>
+
+        <div class="nav-row nav-row-single">
+          <button type="button" class="btn btn-primary" id="toStep2" disabled>Continue</button>
+        </div>
+      </section>
+
+      <!-- STEP 2: Score the Page -->
+      <section class="step" id="step2" data-step="2" hidden aria-labelledby="step2-heading">
+        <div class="fb-panel">
+          <h2 id="step2-heading">Score the page</h2>
+          <p class="card-hint">Answer honestly. A "No" or "Not sure" earns the page one point — points flag where an audit will help most.</p>
+
+          <div class="find-question" data-key="findable">
+            <div class="find-question-label">
+              <span class="find-question-letter">F</span>
+              <div>
+                <p class="find-question-title">Findable</p>
+                <p class="find-question-text">Can members find this page without knowing your department structure?</p>
+              </div>
+            </div>
+            <div class="answer-row" role="radiogroup" aria-label="Findable answer">
+              <button type="button" class="answer-btn" data-answer="Yes">Yes</button>
+              <button type="button" class="answer-btn" data-answer="No">No</button>
+              <button type="button" class="answer-btn" data-answer="Not sure">Not sure</button>
+            </div>
+          </div>
+
+          <div class="find-question" data-key="intuitive">
+            <div class="find-question-label">
+              <span class="find-question-letter">I</span>
+              <div>
+                <p class="find-question-title">Intuitive</p>
+                <p class="find-question-text">Does the navigation make sense without explanation?</p>
+              </div>
+            </div>
+            <div class="answer-row" role="radiogroup" aria-label="Intuitive answer">
+              <button type="button" class="answer-btn" data-answer="Yes">Yes</button>
+              <button type="button" class="answer-btn" data-answer="No">No</button>
+              <button type="button" class="answer-btn" data-answer="Not sure">Not sure</button>
+            </div>
+          </div>
+
+          <div class="find-question" data-key="necessary">
+            <div class="find-question-label">
+              <span class="find-question-letter">N</span>
+              <div>
+                <p class="find-question-title">Necessary</p>
+                <p class="find-question-text">Does the content serve a clear member purpose?</p>
+              </div>
+            </div>
+            <div class="answer-row" role="radiogroup" aria-label="Necessary answer">
+              <button type="button" class="answer-btn" data-answer="Yes">Yes</button>
+              <button type="button" class="answer-btn" data-answer="No">No</button>
+              <button type="button" class="answer-btn" data-answer="Not sure">Not sure</button>
+            </div>
+          </div>
+
+          <div class="find-question" data-key="directed">
+            <div class="find-question-label">
+              <span class="find-question-letter">D</span>
+              <div>
+                <p class="find-question-title">Directed</p>
+                <p class="find-question-text">Does the page clearly guide members to a next step?</p>
+              </div>
+            </div>
+            <div class="answer-row" role="radiogroup" aria-label="Directed answer">
+              <button type="button" class="answer-btn" data-answer="Yes">Yes</button>
+              <button type="button" class="answer-btn" data-answer="No">No</button>
+              <button type="button" class="answer-btn" data-answer="Not sure">Not sure</button>
+            </div>
+          </div>
+
+          <div class="score-summary" id="scoreSummary" hidden>
+            <p class="score-summary-number"><span id="scoreValue">0</span><span class="score-summary-max">/4</span></p>
+            <div>
+              <p class="score-summary-text" id="scoreText"></p>
+              <p class="score-summary-note">"No" and "Not sure" both flag the page for review.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost" id="backStep1">Back</button>
+          <button type="button" class="btn btn-primary" id="toStep3" disabled>Continue</button>
+        </div>
+      </section>
+
+      <!-- STEP 3: Identify Friction -->
+      <section class="step" id="step3" data-step="3" hidden aria-labelledby="step3-heading">
+        <div class="fb-panel">
+          <h2 id="step3-heading">Identify friction</h2>
+          <p class="card-hint">Select anything that applies. This tells the AI where to focus.</p>
+
+          <fieldset class="checkbox-group" id="frictionChoices">
+            <legend class="visually-hidden">Friction points</legend>
+            <label class="checkbox-chip"><input type="checkbox" value="Outdated content"><span>Outdated content</span></label>
+            <label class="checkbox-chip"><input type="checkbox" value="Internal language"><span>Internal language</span></label>
+            <label class="checkbox-chip"><input type="checkbox" value="Too many links"><span>Too many links</span></label>
+            <label class="checkbox-chip"><input type="checkbox" value="Hidden important information"><span>Hidden important information</span></label>
+            <label class="checkbox-chip"><input type="checkbox" value="Missing call to action"><span>Missing call to action</span></label>
+            <label class="checkbox-chip"><input type="checkbox" value="Inconsistent tone"><span>Inconsistent tone</span></label>
+            <label class="checkbox-chip"><input type="checkbox" value="Confusing navigation"><span>Confusing navigation</span></label>
+            <label class="checkbox-chip"><input type="checkbox" value="Not mobile-friendly"><span>Not mobile-friendly</span></label>
+            <label class="checkbox-chip"><input type="checkbox" value="Needs accessibility review"><span>Needs accessibility review</span></label>
+            <label class="checkbox-chip"><input type="checkbox" value="Other"><span>Other</span></label>
+          </fieldset>
+
+          <div class="field-group" id="otherFrictionWrap" hidden>
+            <label for="otherFrictionInput">Describe the friction</label>
+            <input type="text" id="otherFrictionInput" placeholder="e.g. Broken form submission">
+          </div>
+
+          <div class="share-toggle-row" id="shareToggleRow" hidden>
+            <label class="toggle-switch">
+              <input type="checkbox" id="shareToggleInput" checked>
+              <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            </label>
+            <div class="share-toggle-text">
+              <p class="share-toggle-title">Share to room results</p>
+              <p class="share-toggle-sub">Anonymous &mdash; sends only your page type, score, and flagged categories. No URL, no typed text.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-row">
+          <button type="button" class="btn btn-ghost" id="backStep2">Back</button>
+          <button type="button" class="btn btn-primary" id="toStep4">Generate prompt</button>
+        </div>
+      </section>
+
+      <!-- STEP 4: Generated Prompt -->
+      <section class="step" id="step4" data-step="4" hidden aria-labelledby="step4-heading">
+        <div class="fb-panel">
+          <h2 id="step4-heading">Your audit prompt</h2>
+          <p class="card-hint">Paste this into your AI tool of choice to run the audit.</p>
+
+          <div class="manual-entry-callout" id="manualEntryCallout" role="note" hidden>
+            <span class="manual-entry-callout-icon" aria-hidden="true">&#9888;&#65039;</span>
+            <p id="manualEntryText"></p>
+          </div>
+
+          <label for="promptOutput" class="visually-hidden">Generated AI audit prompt</label>
+          <div class="prompt-output-wrap" id="promptOutputWrap">
+            <textarea id="promptOutput" class="prompt-output" rows="16" readonly></textarea>
+          </div>
+
+          <div class="copy-row">
+            <button type="button" class="btn btn-primary" id="copyPromptBtn">Copy prompt</button>
+            <button type="button" class="btn btn-ghost" id="downloadPromptBtn">Download .txt</button>
+          </div>
+          <p class="copy-confirm" id="copyConfirm" role="status" aria-live="polite"></p>
+          <p class="share-confirm" id="shareConfirm" role="status" aria-live="polite" hidden>&#10003; Shared to room results</p>
+
+          <p class="takeaway-strip">Better input creates a better audit.</p>
+        </div>
+
+        <div class="nav-row nav-row-single">
+          <button type="button" class="btn btn-ghost" id="startOverBtn">Audit another page</button>
+        </div>
+
+        <section class="fb-panel saved-audits-card" id="savedAuditsSection" hidden aria-labelledby="savedAuditsHeading">
+          <div class="saved-audits-header">
+            <h2 id="savedAuditsHeading">Your audits</h2>
+            <button type="button" class="link-btn" id="clearAuditsBtn">Clear all</button>
+          </div>
+          <p class="card-hint">Saved on this device only &mdash; not sent anywhere.</p>
+          <ul class="saved-audits-list" id="savedAuditsList"></ul>
+        </section>
+      </section>
       </div>
-      <iframe
-        id="findFrame"
-        src="https://omag-web.github.io/audit-prompt-builder/"
-        title="FIND Audit Prompt Builder"
-        allow="clipboard-write"></iframe>
+
     </div>
-    <p class="tool-frame-note">Prefer your phone? The <a href="https://omag-web.github.io/audit-prompt-builder/" target="_blank" rel="noopener">full-screen version</a> is the same tool, and audits you save show up in both places.</p>
   </section>
 
   <section class="sheet" id="case-study">
@@ -560,61 +1394,26 @@
   <strong>OMAG</strong> — Oklahoma Municipal Assurance Group · This page is a resource hub for conference attendees
 </footer>
 
-<script>
-  /* Auto-size the embedded builder. The builder and this hub share the
-     omag-web.github.io origin, so the parent can read the frame's height
-     directly. If that ever fails (local file preview, a different host),
-     the frame keeps its 900px fallback height and scrolls internally. */
-  (function(){
-    var frame = document.getElementById('findFrame');
-    var wrap = document.getElementById('toolFrame');
-    if(!frame || !wrap) return;
+<template id="savedAuditItemTemplate">
+  <li class="saved-audit-item">
+    <div class="saved-audit-main">
+      <p class="saved-audit-page"></p>
+      <p class="saved-audit-meta"></p>
+    </div>
+    <div class="saved-audit-actions">
+      <button type="button" class="link-btn saved-audit-copy">Copy</button>
+      <button type="button" class="icon-btn saved-audit-delete" aria-label="Delete this saved audit">&times;</button>
+    </div>
+  </li>
+</template>
 
-    var reduceMotion = window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    frame.addEventListener('load', function(){
-      var doc, win;
-      try{
-        doc = frame.contentDocument;
-        win = frame.contentWindow;
-        if(!doc || !doc.body) return;
-      }catch(e){ return; }
-
-      // The builder is designed as a full page (min-height:100vh, its own
-      // background). Inside a frame that would stop it from ever shrinking.
-      var fix = doc.createElement('style');
-      fix.textContent =
-        'html,body{background:transparent!important;}' +
-        '.app{min-height:0!important;}';
-      doc.head.appendChild(fix);
-
-      function fit(){
-        var h = Math.ceil(doc.body.getBoundingClientRect().height);
-        if(h > 0) frame.style.height = h + 'px';
-      }
-
-      // When the builder changes steps it scrolls its own window to the top.
-      // Redirect that so the hub page scrolls back to the top of the tool.
-      win.scrollTo = function(){
-        var top = wrap.getBoundingClientRect().top;
-        if(top < 0){
-          window.scrollTo({
-            top: top + window.pageYOffset - 16,
-            behavior: reduceMotion ? 'auto' : 'smooth'
-          });
-        }
-      };
-
-      if(window.ResizeObserver){
-        new win.ResizeObserver(fit).observe(doc.body);
-      }else{
-        setInterval(fit, 500);
-      }
-      fit();
-    });
-  })();
-</script>
+<!-- The builder's logic and live-results settings load straight from the
+     audit-prompt-builder repo, so prompt changes there show up here too.
+     If you change the builder's step markup, mirror it in Sheet 01 above. -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://omag-web.github.io/audit-prompt-builder/firebase-config.js"></script>
+<script src="https://omag-web.github.io/audit-prompt-builder/script.js"></script>
 
 </body>
 </html>

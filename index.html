@@ -276,6 +276,71 @@
 
   .card .go::after{content:" →";}
 
+  /* ============ EMBEDDED TOOL ============ */
+  .tool-frame{
+    border:1px solid var(--blueprint-navy);
+    border-radius:var(--radius);
+    background:var(--blueprint-white);
+    box-shadow:0 10px 30px rgba(22,50,79,0.12);
+    overflow:hidden;
+  }
+
+  .tool-frame-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+    background:var(--blueprint-navy);
+    color:var(--blueprint-white);
+    padding:10px 16px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.7rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+
+  .tool-frame-bar .detail::before{
+    content:"◆ ";
+    color:var(--brass);
+  }
+
+  .tool-frame-bar a{
+    color:var(--blueprint-line);
+    text-decoration:none;
+  }
+
+  .tool-frame-bar a:hover,
+  .tool-frame-bar a:focus-visible{
+    color:var(--blueprint-white);
+    text-decoration:underline;
+    text-underline-offset:3px;
+  }
+
+  .tool-frame iframe{
+    display:block;
+    width:100%;
+    height:900px; /* fallback until the frame reports its real height */
+    border:0;
+    background:transparent;
+    transition:height 0.25s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .tool-frame iframe{transition:none;}
+  }
+
+  .tool-frame-note{
+    margin:14px 0 0;
+    font-size:0.85rem;
+    color:var(--ink-soft);
+  }
+
+  .tool-frame-note a{
+    color:var(--brass-dark);
+    text-underline-offset:3px;
+  }
+
   /* Before/after comparison */
   .compare{
     display:grid;
@@ -429,15 +494,20 @@
       <span class="sheet-num">SHEET 01</span>
       <h2>The Tool</h2>
     </div>
-    <p class="sheet-desc">The FIND Audit Prompt Builder turns the framework from this session into a ready-to-run prompt — point it at any member-facing page and get a structured audit back.</p>
-    <div class="card-row">
-      <a class="card" href="https://omag-web.github.io/audit-prompt-builder/" target="_blank" rel="noopener">
-        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="1"></rect><path d="M3 9h18"></path><path d="M8 4v5"></path><circle cx="12.5" cy="13.5" r="2.5"></circle><path d="M16 17l2 2"></path></svg>
-        <h3>FIND Audit Prompt Builder</h3>
-        <p>Run a Findable / Intuitive / Necessary / Directed audit on any page in minutes.</p>
-        <span class="go">Open the tool</span>
-      </a>
+    <p class="sheet-desc">The FIND Audit Prompt Builder turns the framework from this session into a ready-to-run prompt. Work through it right here: pick a member-facing page, score it, flag the friction, and copy a structured audit prompt into the AI tool of your choice.</p>
+
+    <div class="tool-frame" id="toolFrame">
+      <div class="tool-frame-bar">
+        <span class="detail">Detail A · FIND Audit Prompt Builder</span>
+        <a href="https://omag-web.github.io/audit-prompt-builder/" target="_blank" rel="noopener">Open full screen ↗</a>
+      </div>
+      <iframe
+        id="findFrame"
+        src="https://omag-web.github.io/audit-prompt-builder/"
+        title="FIND Audit Prompt Builder"
+        allow="clipboard-write"></iframe>
     </div>
+    <p class="tool-frame-note">Prefer your phone? The <a href="https://omag-web.github.io/audit-prompt-builder/" target="_blank" rel="noopener">full-screen version</a> is the same tool, and audits you save show up in both places.</p>
   </section>
 
   <section class="sheet" id="case-study">
@@ -489,6 +559,62 @@
 <footer>
   <strong>OMAG</strong> — Oklahoma Municipal Assurance Group · This page is a resource hub for conference attendees
 </footer>
+
+<script>
+  /* Auto-size the embedded builder. The builder and this hub share the
+     omag-web.github.io origin, so the parent can read the frame's height
+     directly. If that ever fails (local file preview, a different host),
+     the frame keeps its 900px fallback height and scrolls internally. */
+  (function(){
+    var frame = document.getElementById('findFrame');
+    var wrap = document.getElementById('toolFrame');
+    if(!frame || !wrap) return;
+
+    var reduceMotion = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    frame.addEventListener('load', function(){
+      var doc, win;
+      try{
+        doc = frame.contentDocument;
+        win = frame.contentWindow;
+        if(!doc || !doc.body) return;
+      }catch(e){ return; }
+
+      // The builder is designed as a full page (min-height:100vh, its own
+      // background). Inside a frame that would stop it from ever shrinking.
+      var fix = doc.createElement('style');
+      fix.textContent =
+        'html,body{background:transparent!important;}' +
+        '.app{min-height:0!important;}';
+      doc.head.appendChild(fix);
+
+      function fit(){
+        var h = Math.ceil(doc.body.getBoundingClientRect().height);
+        if(h > 0) frame.style.height = h + 'px';
+      }
+
+      // When the builder changes steps it scrolls its own window to the top.
+      // Redirect that so the hub page scrolls back to the top of the tool.
+      win.scrollTo = function(){
+        var top = wrap.getBoundingClientRect().top;
+        if(top < 0){
+          window.scrollTo({
+            top: top + window.pageYOffset - 16,
+            behavior: reduceMotion ? 'auto' : 'smooth'
+          });
+        }
+      };
+
+      if(window.ResizeObserver){
+        new win.ResizeObserver(fit).observe(doc.body);
+      }else{
+        setInterval(fit, 500);
+      }
+      fit();
+    });
+  })();
+</script>
 
 </body>
 </html>

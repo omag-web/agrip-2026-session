@@ -889,6 +889,232 @@
     #builder *{transition:none !important;}
   }
 
+
+  /* ============ JUMP NAV ============ */
+  .jump-nav{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    padding:28px 0 0;
+  }
+  .jump-nav a{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 14px;
+    border:1px solid rgba(22,50,79,0.3);
+    border-radius:var(--radius);
+    background:var(--blueprint-white);
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:500;
+    font-size:0.92rem;
+    color:var(--blueprint-navy);
+    text-decoration:none;
+  }
+  .jump-nav a span{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.7rem;
+    color:var(--brass-dark);
+  }
+  .jump-nav a:hover, .jump-nav a:focus-visible{border-color:var(--blueprint-navy);}
+  .jump-nav a:focus-visible{outline:2px solid var(--brass); outline-offset:2px;}
+  .sheet{scroll-margin-top:16px;}
+
+  /* ============ FIND FRAMEWORK ============ */
+  .find-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:16px;
+  }
+  @media (max-width:860px){ .find-grid{grid-template-columns:repeat(2, 1fr);} }
+  @media (max-width:420px){ .find-grid{grid-template-columns:1fr;} }
+  .find-card{
+    background:var(--blueprint-white);
+    border:1px solid rgba(22,50,79,0.18);
+    border-top:4px solid var(--blueprint-navy);
+    border-radius:var(--radius);
+    padding:22px 20px;
+  }
+  .find-card:nth-child(even){border-top-color:var(--brass);}
+  .find-card-letter{
+    display:grid;
+    place-items:center;
+    width:44px; height:44px;
+    margin-bottom:14px;
+    font-family:'Space Grotesk', sans-serif;
+    font-size:1.4rem;
+    font-weight:700;
+    color:var(--blueprint-white);
+    background:var(--blueprint-navy);
+    border-radius:var(--radius);
+  }
+  .find-card:nth-child(even) .find-card-letter{background:var(--brass); color:var(--blueprint-navy-deep);}
+  .find-card h3{margin:0 0 6px; font-size:1.1rem; color:var(--blueprint-navy);}
+  .find-card p{margin:0; font-size:0.95rem; color:var(--ink-soft);}
+  .find-strip{
+    margin:20px 0 0;
+    padding:14px 18px;
+    background:var(--blueprint-navy);
+    color:var(--blueprint-white);
+    border-radius:var(--radius);
+    text-align:center;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:500;
+  }
+  .find-strip b{color:var(--brass);}
+
+  .remember{margin-top:36px;}
+  .remember-label{margin:0 0 12px; font-size:0.72rem; color:var(--brass-dark);}
+  .remember-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:16px;
+    counter-reset:rem;
+  }
+  @media (max-width:760px){ .remember-list{grid-template-columns:1fr;} }
+  .remember-list li{
+    counter-increment:rem;
+    padding:18px 20px;
+    border:1px dashed rgba(22,50,79,0.35);
+    border-radius:var(--radius);
+  }
+  .remember-list li::before{
+    content:counter(rem, decimal-leading-zero);
+    display:block;
+    margin-bottom:6px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.75rem;
+    color:var(--brass-dark);
+  }
+  .remember-list h3{margin:0 0 6px; font-size:1rem; color:var(--blueprint-navy);}
+  .remember-list p{margin:0; font-size:0.92rem; color:var(--ink-soft);}
+
+  /* ============ CLAUDE SKILL NOTES ============ */
+  .skill-compare{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    gap:16px;
+    align-items:stretch;
+  }
+  @media (max-width:700px){
+    .skill-compare{grid-template-columns:1fr;}
+    .skill-arrow{transform:rotate(90deg); justify-self:center;}
+  }
+  .skill-col{
+    padding:22px 22px 18px;
+    border-radius:var(--radius);
+    border:1px solid rgba(22,50,79,0.2);
+  }
+  .skill-col.without{background:#e7e0cb;}
+  .skill-col.with{background:var(--blueprint-white); border-color:var(--blueprint-navy);}
+  .skill-col-tag{margin:0 0 6px; font-size:0.68rem; color:var(--brass-dark);}
+  .skill-col.with .skill-col-tag{color:var(--blueprint-navy);}
+  .skill-col h3{margin:0 0 10px; font-size:1.1rem; color:var(--ink);}
+  .skill-col ul{margin:0; padding-left:18px; color:var(--ink-soft); font-size:0.95rem;}
+  .skill-col li{margin:4px 0;}
+  .skill-col.without li{text-decoration:line-through; text-decoration-color:rgba(147,105,44,0.6);}
+  .skill-arrow{
+    align-self:center;
+    font-family:'Space Grotesk', sans-serif;
+    font-size:1.8rem;
+    color:var(--brass);
+  }
+  .skill-details{
+    display:grid;
+    grid-template-columns:1fr 1fr 1.2fr;
+    gap:20px;
+    margin-top:24px;
+    align-items:start;
+  }
+  @media (max-width:860px){ .skill-details{grid-template-columns:1fr 1fr;} .skill-download{grid-column:1 / -1;} }
+  @media (max-width:520px){ .skill-details{grid-template-columns:1fr;} }
+  .skill-details h3{margin:0 0 10px; font-size:1rem; color:var(--blueprint-navy);}
+  .tick-list{list-style:none; margin:0; padding:0;}
+  .tick-list li{
+    position:relative;
+    padding:6px 0 6px 24px;
+    border-bottom:1px solid rgba(22,50,79,0.1);
+    font-size:0.95rem;
+  }
+  .tick-list li::before{
+    content:"◆";
+    position:absolute;
+    left:2px; top:7px;
+    font-size:0.7rem;
+    color:var(--brass);
+  }
+  .skill-download{border-color:var(--blueprint-navy);}
+
+  /* ============ EXAMPLE PROMPTS ============ */
+  .prompt-list{display:grid; gap:14px;}
+  .prompt-card{
+    background:var(--blueprint-white);
+    border:1px solid rgba(22,50,79,0.18);
+    border-left:4px solid var(--blueprint-navy);
+    border-radius:var(--radius);
+    padding:18px 20px;
+  }
+  .prompt-card-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+  }
+  .prompt-tag{
+    margin:0 0 2px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.68rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--brass-dark);
+  }
+  .prompt-card h3{margin:0; font-size:1.05rem; color:var(--blueprint-navy);}
+  .prompt-desc{margin:6px 0 10px; font-size:0.93rem; color:var(--ink-soft);}
+  .prompt-copy{
+    flex-shrink:0;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:0.85rem;
+    padding:8px 16px;
+    border:1px solid var(--blueprint-navy);
+    border-radius:var(--radius);
+    background:var(--blueprint-navy);
+    color:var(--blueprint-white);
+    cursor:pointer;
+  }
+  .prompt-copy:hover{background:var(--blueprint-navy-deep);}
+  .prompt-copy:focus-visible{outline:2px solid var(--brass); outline-offset:2px;}
+  .prompt-copy.is-copied{background:var(--brass); border-color:var(--brass); color:var(--blueprint-navy-deep);}
+  .prompt-body summary{
+    cursor:pointer;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.75rem;
+    color:var(--blueprint-navy);
+  }
+  .prompt-body summary:focus-visible{outline:2px solid var(--brass); outline-offset:2px;}
+  .prompt-body pre{
+    margin:10px 0 0;
+    max-height:360px;
+    overflow:auto;
+    white-space:pre-wrap;
+    word-break:break-word;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+    line-height:1.6;
+    background:#fff;
+    border:1px solid rgba(22,50,79,0.2);
+    border-radius:var(--radius);
+    padding:14px 16px;
+  }
+  .copy-status{min-height:1.2em; margin:10px 0 0; font-family:'JetBrains Mono', monospace; font-size:0.75rem; color:var(--blueprint-navy);}
+
+  /* ============ SESSION RESOURCES ============ */
+  .resources-row{grid-template-columns:repeat(auto-fit, minmax(260px, 360px));}
+  .sub-head{margin:40px 0 14px; font-size:1.15rem; color:var(--blueprint-navy);}
+
   /* Before/after comparison */
   .compare{
     display:grid;
@@ -1015,15 +1241,15 @@
   <div class="hero-inner">
     <p class="eyebrow label">AGRiP Conference Session · Resource Hub</p>
     <h1>Using AI to Rebuild<br>Your Pool's Website</h1>
-    <p class="hero-sub">Everything from the session in one place — the audit tool, a live before/after, and the framework you can take home to run this on <b>your</b> pool's site.</p>
+    <p class="hero-sub">Everything from the session in one place — the FIND Framework, the Audit Prompt Builder, the Claude Skill, example prompts, and the slides — so you can run this on <b>your</b> pool's site.</p>
   </div>
   <div class="title-block">
     <table>
       <tr>
         <td class="tb-label">Session</td>
         <td>Using AI to Rebuild Your Pool's Website</td>
-        <td class="tb-label">Sheet</td>
-        <td>01 of 01</td>
+        <td class="tb-label">Sheets</td>
+        <td>01 – 05</td>
       </tr>
       <tr>
         <td class="tb-label">Presented by</td>
@@ -1037,12 +1263,60 @@
 
 <main>
 
-  <section class="sheet" id="tool">
+  <nav class="jump-nav" aria-label="Session hub sections">
+    <a href="#find"><span>01</span>FIND Framework</a>
+    <a href="#tool"><span>02</span>Audit Prompt Builder</a>
+    <a href="#skill"><span>03</span>Claude Skill Notes</a>
+    <a href="#prompts"><span>04</span>Example Prompts</a>
+    <a href="#resources"><span>05</span>Session Resources</a>
+  </nav>
+
+  <section class="sheet" id="find">
     <div class="sheet-head">
       <span class="sheet-num">SHEET 01</span>
-      <h2>The Tool</h2>
+      <h2>The FIND Framework</h2>
     </div>
-    <p class="sheet-desc">The FIND Audit Prompt Builder turns one member-facing page into a ready-to-run AI audit prompt. Pick a page, score it against FIND, flag the friction, and copy the prompt into the AI tool of your choice.</p>
+    <p class="sheet-desc">A simple way to evaluate your website through your members’ eyes.</p>
+    <div class="find-grid">
+      <div class="find-card">
+        <span class="find-card-letter">F</span>
+        <h3>Findable</h3>
+        <p>Can members quickly locate what they need?</p>
+      </div>
+      <div class="find-card">
+        <span class="find-card-letter">I</span>
+        <h3>Intuitive</h3>
+        <p>Does the navigation make sense without explanation?</p>
+      </div>
+      <div class="find-card">
+        <span class="find-card-letter">N</span>
+        <h3>Necessary</h3>
+        <p>Does this content help members complete their task?</p>
+      </div>
+      <div class="find-card">
+        <span class="find-card-letter">D</span>
+        <h3>Directed</h3>
+        <p>Does this page guide members to a next step?</p>
+      </div>
+    </div>
+    <p class="find-strip">If members can’t <b>FIND</b> it, they can’t use it.</p>
+
+    <div class="remember">
+      <p class="remember-label label">What to remember</p>
+      <ol class="remember-list">
+        <li><h3>Start with a member.</h3><p>Your website should reflect how members look for help, not how your organization is arranged.</p></li>
+        <li><h3>Give AI a framework.</h3><p>Tools work better when you define the lens, standards, and the output you expect.</p></li>
+        <li><h3>Keep people in the process.</h3><p>AI can support the audit, but humans own accuracy, judgement, and trust.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sheet" id="tool">
+    <div class="sheet-head">
+      <span class="sheet-num">SHEET 02</span>
+      <h2>Audit Prompt Builder</h2>
+    </div>
+    <p class="sheet-desc">Turn one member-facing page into a ready-to-run AI audit prompt. Pick a page, score it against FIND, flag the friction, and copy the prompt into the AI tool of your choice.</p>
 
     <div class="fb" id="builder" data-find-builder>
 
@@ -1339,12 +1613,286 @@ Keep the whole audit tight enough to read in under a minute: fragments over full
     </div>
   </section>
 
-  <section class="sheet" id="case-study">
+  <section class="sheet" id="skill">
     <div class="sheet-head">
-      <span class="sheet-num">SHEET 02</span>
-      <h2>Case Study — Before &amp; After</h2>
+      <span class="sheet-num">SHEET 03</span>
+      <h2>Claude Skill Notes</h2>
     </div>
-    <p class="sheet-desc">The risk resources page, run through the exact process covered in this session. Open both and see what the FIND framework actually changed.</p>
+    <p class="sheet-desc">Instead of rebuilding the same audit prompt every time, use this Skill to make the process repeatable and consistent.</p>
+
+    <div class="skill-compare">
+      <div class="skill-col without">
+        <p class="skill-col-tag label">Without the Skill</p>
+        <h3>One-off prompt</h3>
+        <ul>
+          <li>Re-explain the framework</li>
+          <li>Re-list the standards</li>
+          <li>Rebuild the output format</li>
+          <li>Hope the audit is consistent</li>
+        </ul>
+      </div>
+      <div class="skill-arrow" aria-hidden="true">→</div>
+      <div class="skill-col with">
+        <p class="skill-col-tag label">With the Skill</p>
+        <h3>Repeatable audit</h3>
+        <ul>
+          <li>FIND Framework defined</li>
+          <li>Standards are built in</li>
+          <li>Output format stays consistent</li>
+          <li>Easier to reuse across pages</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="skill-details">
+      <div>
+        <h3>The Skill includes</h3>
+        <ul class="tick-list">
+          <li>FIND Framework definitions</li>
+          <li>Member-experience review lens</li>
+          <li>Pool-specific content concerns</li>
+          <li>Human-review guardrails</li>
+          <li>Structured audit output</li>
+        </ul>
+      </div>
+      <div>
+        <h3>It returns</h3>
+        <ul class="tick-list">
+          <li>Quick summary</li>
+          <li>FIND scorecard</li>
+          <li>Issues found</li>
+          <li>Recommended fixes</li>
+          <li>Human review needed</li>
+          <li>Suggested follow-up prompt</li>
+        </ul>
+      </div>
+      <a class="card skill-download" href="https://github.com/omag-web/agrip-2026-session/releases/download/v1.0.0/pool-website-auditor.skill" target="_blank" rel="noopener">
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><path d="M4 19h16"></path></svg>
+        <h3>Download the Skill</h3>
+        <p>Add it to Claude as a skill, then ask Claude to audit a page. Works with a URL, pasted text, a screenshot, or a folder of page files in Claude Code.</p>
+        <span class="go">pool-website-auditor.skill</span>
+      </a>
+    </div>
+    <p class="find-strip">Save time. Stay consistent. Review with confidence.</p>
+  </section>
+
+  <section class="sheet" id="prompts">
+    <div class="sheet-head">
+      <span class="sheet-num">SHEET 04</span>
+      <h2>Example Prompts</h2>
+    </div>
+    <p class="sheet-desc">AI works best when you don’t just ask it to “review my website.” Give it a lens, standards, and a repeatable process. Start with the task, then choose the workspace.</p>
+    <div class="prompt-list">
+      <article class="prompt-card">
+        <div class="prompt-card-head">
+          <div>
+            <p class="prompt-tag">Builder output · any AI tool</p>
+            <h3>Full FIND audit</h3>
+          </div>
+          <button type="button" class="prompt-copy" data-copy-target="ex-prompt-1">Copy</button>
+        </div>
+        <p class="prompt-desc">The complete prompt the Audit Prompt Builder generates, shown here for a Claims page. Use the builder above to make one for your own page.</p>
+        <details class="prompt-body">
+          <summary>Show prompt</summary>
+          <pre id="ex-prompt-1">Act as a website auditor for a public entity risk pool, insurance pool, or municipal association. Audit the page described below using the FIND Framework — evaluate it from the point of view of a busy member (a city clerk, public works director, HR staffer, finance officer, or risk manager) trying to get in, find what they need, and get out. Evaluate it from the member's point of view, not the organization's.
+
+## FIND Framework
+Findable: Can members quickly locate this page or information without needing to understand the organization's internal department structure?
+Intuitive: Does the navigation, wording, layout, and page structure make sense without explanation?
+Necessary: Does the content serve a clear member purpose, or is it outdated, duplicated, overly internal, or no longer useful?
+Directed: Does the page clearly guide members toward the next step — submitting a claim, registering for training, downloading a form, contacting the right person, accessing a resource?
+
+## Page being audited
+Page type: Claims
+Internal FIND pre-score: 2/4 (flagged: Findable, Directed)
+Focus areas flagged ahead of time: outdated content, confusing navigation.
+
+No URL was provided for this page.
+IMPORTANT: I will paste the page's text, HTML, or a screenshot directly below this prompt. Wait for that content before starting the audit — do not guess, assume, or invent what's on the page.
+
+## What to look for
+- Outdated or stale content
+- Internal language or organizational jargon
+- Department-centered structure instead of member-centered structure
+- Hidden or buried important information
+- Too many links or unclear navigation paths
+- Missing or vague calls to action
+- Confusing next steps
+- Inconsistent tone, formatting, or structure
+- Duplicated or conflicting information
+- Lack of plain language
+- Accessibility concerns (missing/unclear alt text, low color contrast, vague link text like "click here," heading structure that skips levels, form fields without visible labels)
+- Mobile usability concerns (small tap targets, horizontal scrolling, navigation that doesn't collapse on a phone width)
+- Content that may require legal, coverage, claims, or policy expert review
+
+## Output format
+Structure your response exactly like this:
+
+# Website Audit: [Page Name or URL]
+
+## Quick Summary
+2-3 sentences max, no throat-clearing. If you were only given partial information (no URL, or no pasted content), say so plainly with a ⚠ Unverified note — do not fill gaps with assumptions.
+
+## FIND Scorecard
+Findable: [Strong / Needs Attention / Weak / Unable to Determine] — 2-3 sentence explanation
+Intuitive: [Strong / Needs Attention / Weak / Unable to Determine] — 2-3 sentence explanation
+Necessary: [Strong / Needs Attention / Weak / Unable to Determine] — 2-3 sentence explanation
+Directed: [Strong / Needs Attention / Weak / Unable to Determine] — 2-3 sentence explanation
+
+## Issues Found
+- [fragment, not a paragraph]
+
+## Recommended Fixes
+High: [fragment]
+Medium: [fragment]
+Low: [fragment]
+
+## Human Review Needed
+- [anything touching legal, coverage, claims, or policy specifics — don't assess accuracy yourself, just flag it]
+
+## Suggested Rewrite
+Before: "[current copy]"
+After: "[revised copy]"
+
+Keep the whole audit tight enough to read in under a minute: fragments over full paragraphs, plain language throughout, and don't manufacture issues to fill out every section — if the page genuinely holds up well, say so and keep that section short.</pre>
+        </details>
+      </article>
+      <article class="prompt-card">
+        <div class="prompt-card-head">
+          <div>
+            <p class="prompt-tag">Paste before your audit prompt</p>
+            <h3>Give AI the background</h3>
+          </div>
+          <button type="button" class="prompt-copy" data-copy-target="ex-prompt-2">Copy</button>
+        </div>
+        <p class="prompt-desc">Better inputs create better audits. Fill this in once and reuse it with every page you review.</p>
+        <details class="prompt-body">
+          <summary>Show prompt</summary>
+          <pre id="ex-prompt-2">Before you audit, here is the context you need.
+
+Who our members are: [e.g. city clerks, public works directors, HR staff, finance officers, risk managers]
+Our website goals and key actions: [e.g. file a claim, register for training, find a form, reach the right person]
+Our brand voice and terminology: [e.g. professional and approachable; we say &quot;members,&quot; not &quot;clients&quot;]
+Standards to measure against:
+- Member-focused
+- Clear, plain language
+- Professional and approachable tone
+- WCAG accessibility expectations
+Relevant policies or resources: [anything the AI should know before judging the content]
+
+Use this context for every page I send you in this conversation.</pre>
+        </details>
+      </article>
+      <article class="prompt-card">
+        <div class="prompt-card-head">
+          <div>
+            <p class="prompt-tag">Light audit · Claude</p>
+            <h3>Review page copy</h3>
+          </div>
+          <button type="button" class="prompt-copy" data-copy-target="ex-prompt-3">Copy</button>
+        </div>
+        <p class="prompt-desc">A quick pass on one page's wording when you don't need the full audit.</p>
+        <details class="prompt-body">
+          <summary>Show prompt</summary>
+          <pre id="ex-prompt-3">Review the copy on this page from a member&#x27;s point of view. A member is a busy city or town employee trying to find what they need and get out.
+
+Flag:
+- Internal language or jargon a member wouldn&#x27;t use
+- Important information buried below less important content
+- Places where the next step is unclear
+
+For each issue, quote the current wording and suggest a plain-language rewrite. Keep it brief. Do not change facts, coverage details, or policy language; list anything like that under &quot;Needs human review.&quot;
+
+[Paste the page text or a screenshot here]</pre>
+        </details>
+      </article>
+      <article class="prompt-card">
+        <div class="prompt-card-head">
+          <div>
+            <p class="prompt-tag">Light audit · Claude</p>
+            <h3>Rewrite for clarity</h3>
+          </div>
+          <button type="button" class="prompt-copy" data-copy-target="ex-prompt-4">Copy</button>
+        </div>
+        <p class="prompt-desc">Turn one dense section into something a member can scan.</p>
+        <details class="prompt-body">
+          <summary>Show prompt</summary>
+          <pre id="ex-prompt-4">Rewrite the section below so a member can scan it in under 30 seconds.
+
+- Lead with what the member can do or get here
+- Use plain language and short sentences
+- Break long paragraphs into a short intro plus a list where it helps
+- End with one clear next step (a button label or link text)
+- Keep every fact, date, and requirement exactly as written
+
+Give me the rewrite, then a short list of anything you changed in meaning or weren&#x27;t sure about.
+
+[Paste the section here]</pre>
+        </details>
+      </article>
+      <article class="prompt-card">
+        <div class="prompt-card-head">
+          <div>
+            <p class="prompt-tag">Deeper audit · Claude Code</p>
+            <h3>Find patterns across pages</h3>
+          </div>
+          <button type="button" class="prompt-copy" data-copy-target="ex-prompt-5">Copy</button>
+        </div>
+        <p class="prompt-desc">For a website-level look across many pages or files at once.</p>
+        <details class="prompt-body">
+          <summary>Show prompt</summary>
+          <pre id="ex-prompt-5">Review the website pages in this folder using the FIND Framework (Findable, Intuitive, Necessary, Directed).
+
+Look across pages, not just within them:
+- Pages that cover the same topic or duplicate each other
+- Inconsistent layouts, headings, or button wording for the same kind of page
+- Navigation labels that follow our department structure instead of member tasks
+- Pages with no clear next step
+
+Return a table of the patterns you find, which pages each affects, and a suggested fix. Then recommend the three pages to update first and why. Don&#x27;t edit any files yet.</pre>
+        </details>
+      </article>
+      <article class="prompt-card">
+        <div class="prompt-card-head">
+          <div>
+            <p class="prompt-tag">Follow-up · any AI tool</p>
+            <h3>Turn the audit into next steps</h3>
+          </div>
+          <button type="button" class="prompt-copy" data-copy-target="ex-prompt-6">Copy</button>
+        </div>
+        <p class="prompt-desc">A good AI audit helps you decide what to do next. Use this after any audit.</p>
+        <details class="prompt-body">
+          <summary>Show prompt</summary>
+          <pre id="ex-prompt-6">Based on the audit above, turn the findings into a short action plan:
+
+1. Issues found: what&#x27;s confusing, missing, or hard to use (one line each)
+2. Recommended fixes: what should change, ordered High / Medium / Low
+3. Review needed: anything that requires human judgment, and who should review it (legal, claims, coverage, or the page owner)
+
+Keep it to one screen. I&#x27;ll use it to decide what to fix first.</pre>
+        </details>
+      </article>
+    </div>
+    <p class="copy-status" id="promptCopyStatus" role="status" aria-live="polite"></p>
+  </section>
+
+  <section class="sheet" id="resources">
+    <div class="sheet-head">
+      <span class="sheet-num">SHEET 05</span>
+      <h2>Session Resources</h2>
+    </div>
+    <p class="sheet-desc">The slides from today, plus the OMAG case study: our risk management resources page, before and after running it through the process covered in this session.</p>
+
+    <div class="card-row resources-row">
+      <a class="card" href="slides/AGRiP-2026-Using-AI-to-Rebuild-Your-Pools-Website.pdf" target="_blank" rel="noopener">
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="1"></rect><path d="M8 21h8"></path><path d="M12 18v3"></path></svg>
+        <h3>Session Slides</h3>
+        <p>The full deck from the presentation (PDF, 23 slides).</p>
+        <span class="go">View the slides</span>
+      </a>
+    </div>
+
+    <h3 class="sub-head">Case Study — Before &amp; After</h3>
     <div class="compare">
       <div class="compare-panel before">
         <span class="compare-tag label">Before</span>
@@ -1358,28 +1906,6 @@ Keep the whole audit tight enough to read in under a minute: fragments over full
         <p>Rebuilt using the framework — live on omag.org today.</p>
         <a class="linkout" href="https://www.omag.org/risk-resources" target="_blank" rel="noopener">View updated page →</a>
       </div>
-    </div>
-  </section>
-
-  <section class="sheet" id="take-home">
-    <div class="sheet-head">
-      <span class="sheet-num">SHEET 03</span>
-      <h2>Take It With You</h2>
-    </div>
-    <p class="sheet-desc">Materials to keep running this after the session ends.</p>
-    <div class="card-row">
-      <a class="card" href="https://github.com/omag-web/agrip-2026-session/releases/download/v1.0.0/pool-website-auditor.skill" target="_blank" rel="noopener">
-        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><path d="M4 19h16"></path></svg>
-        <h3>Claude Skill — FIND Framework</h3>
-        <p>A downloadable skill that runs the same audit process locally.</p>
-        <span class="go">Download the skill</span>
-      </a>
-      <a class="card" href="slides/AGRiP-2026-Using-AI-to-Rebuild-Your-Pools-Website.pdf" target="_blank" rel="noopener">
-        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="1"></rect><path d="M8 21h8"></path><path d="M12 18v3"></path></svg>
-        <h3>Session Slides</h3>
-        <p>The full deck from the presentation (PDF, 23 slides).</p>
-        <span class="go">View the slides</span>
-      </a>
     </div>
   </section>
 
@@ -1409,6 +1935,38 @@ Keep the whole audit tight enough to read in under a minute: fragments over full
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="https://omag-web.github.io/audit-prompt-builder/firebase-config.js"></script>
 <script src="https://omag-web.github.io/audit-prompt-builder/script.js"></script>
+
+<script>
+  /* Copy buttons for the Example Prompts sheet */
+  (function(){
+    var status = document.getElementById('promptCopyStatus');
+    function fallbackCopy(text){
+      var t = document.createElement('textarea');
+      t.value = text; t.setAttribute('readonly','');
+      t.style.position='fixed'; t.style.top='-1000px';
+      document.body.appendChild(t); t.select();
+      var ok=false; try{ ok=document.execCommand('copy'); }catch(e){}
+      document.body.removeChild(t); return ok;
+    }
+    document.querySelectorAll('.prompt-copy').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var pre = document.getElementById(btn.getAttribute('data-copy-target'));
+        if(!pre) return;
+        var text = pre.textContent;
+        var title = btn.closest('.prompt-card').querySelector('h3').textContent;
+        function done(ok){
+          btn.textContent = ok ? 'Copied' : 'Copy';
+          btn.classList.toggle('is-copied', ok);
+          if(status) status.textContent = ok ? 'Copied \u201C' + title + '\u201D prompt.' : 'Copy unavailable \u2014 open the prompt and select the text instead.';
+          setTimeout(function(){ btn.textContent='Copy'; btn.classList.remove('is-copied'); }, 2000);
+        }
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(function(){ done(true); }, function(){ done(fallbackCopy(text)); });
+        }else{ done(fallbackCopy(text)); }
+      });
+    });
+  })();
+</script>
 
 </body>
 </html>

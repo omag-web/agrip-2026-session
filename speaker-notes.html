@@ -277,6 +277,8 @@ body{background:var(--bg); color:var(--fg); font-family:var(--sans); font-size:1
 <ul class="beats"><li>Maybe it’s training.</li><li>Benefits.</li><li>A resource library.</li><li>A program.</li><li>A page where somebody requests help.</li></ul>
 <div class="say"><p>Pick something people actually need to use.</p></div>
 <p class="cue cue-pause"><span>Pause</span></p>
+<div class="say"><p>Now run that page through the five questions on the screen.</p><p>Give yourself one point for every No or Not Sure.</p><p><strong class="key">If you score two or more, that page is ready for an AI-assisted audit.</strong></p></div>
+<p class="cue cue-act"><span>Allow 30 seconds</span></p>
 <div class="say"><p>Now think about the person using that page.</p><p>What are they trying to accomplish?</p><p>And where might they get slowed down?</p></div>
 <p class="cue cue-pause"><span>Pause</span></p>
 <div class="say"><p>You don’t have to solve it yet.</p><p><strong class="key">Just keep that page in mind. We’re going to come back to it.</strong></p></div>
@@ -290,12 +292,12 @@ body{background:var(--bg); color:var(--fg); font-family:var(--sans); font-size:1
   </aside>
   <div class="slide-body">
     <h2 id="t9">Find the Friction</h2>
-    <div class="say"><p>Now let’s practice with an example.</p><p>Imagine you’re seeing this page for the first time and you came here with something specific to accomplish.</p></div>
+    <div class="say"><p>Now let’s practice with an example.</p><p>Imagine you’re seeing this page for the first time, and you came here to apply for a building permit.</p></div>
 <p class="ask"><span class="ask-tag">Ask</span>Where would you start? What might make you hesitate?</p>
 <p class="cue cue-act"><span>Take two or three responses</span></p>
 <div class="say"><p>Those are exactly the kinds of things we’re looking for.</p></div>
 <h3 class="beat">Competing Navigation</h3>
-<div class="say"><p>There are several places to begin.</p><p>If I’m looking for one particular service, can I recognize the right path?</p></div>
+<div class="say"><p>There are several places to begin.</p><p>If I’m looking for the permit application, can I recognize the right path?</p></div>
 <h3 class="beat">Buried Information</h3>
 <div class="say"><p>Some useful information is farther down the page.</p><p>The question is:</p><p><strong class="key">What does this person need to see first?</strong></p></div>
 <h3 class="beat">Too Many Links</h3>
@@ -407,6 +409,7 @@ body{background:var(--bg); color:var(--fg); font-family:var(--sans); font-size:1
 <ul class="beats"><li>How do we organize a growing collection of resources?</li><li>And how do we create a more consistent experience across departments?</li></ul>
 <p class="cue cue-act"><span>Point to page</span></p>
 <div class="say"><p>Someone arriving here may only need one document or one type of assistance.</p><p>We know where it lives because we’ve worked with the page.</p><p>They have to figure it out from what they see.</p><p>Which brings us back to our opening question:</p><p><strong class="key">Would someone who started Monday know where to begin?</strong></p></div>
+<p class="ask"><span class="ask-tag">Ask</span>Looking at this page, where would you click first?</p>
 <p class="cue cue-act"><span>Invite one or two observations</span></p>
 <div class="say"><p>We didn’t have bad information.</p><p>We had useful content.</p><p><strong class="key">The structure just needed to catch up.</strong></p></div>
     <p class="next">Next · <b>14</b> Where AI Helped OMAG</p>
@@ -501,7 +504,7 @@ body{background:var(--bg); color:var(--fg); font-family:var(--sans); font-size:1
     <h2 id="t18">Choosing the Right AI Workspace</h2>
     <div class="say"><p>You’re going to see a lot of different AI tools and workspaces.</p><p>My advice is simple:</p><p><strong class="key">Don’t start with the tool. Start with the task.</strong></p></div>
 <ul class="beats"><li>What are you trying to review?</li><li>And what does the AI need access to?</li></ul>
-<div class="say"><p>If you’re reviewing one webpage, sharing the content in chat may be enough.</p><p>If you’re working across multiple files or a larger website project, you may need a workspace that can access more material.</p><p>But you don’t have to start big.</p><p><strong class="key">One page is enough.</strong></p></div>
+<div class="say"><p>If you’re reviewing one webpage, like the one you picked earlier, sharing the content in chat may be enough.</p><p>If you’re working across multiple files or a larger website project, you may need a workspace that can access more material.</p><p>But you don’t have to start big.</p><p><strong class="key">One page is enough.</strong></p></div>
 <p class="transition"><span class="tr-tag">Transition</span>So let’s build the instructions for that page.</p>
     <p class="next">Next · <b>19</b> FIND Audit Prompt Builder</p>
   </div>
@@ -519,8 +522,8 @@ body{background:var(--bg); color:var(--fg); font-family:var(--sans); font-size:1
 <div class="say"><p>It walks you through four steps:</p></div>
 <ul class="beats"><li>Choose a page.</li><li>Score it with FIND.</li><li>Spot the friction.</li><li>Generate your prompt.</li></ul>
 <div class="say"><p>Then the builder pulls those pieces together.</p></div>
-<ul class="beats"><li>The page.</li><li>The person.</li><li>The task.</li><li>The FIND Framework.</li><li>And the feedback we want.</li></ul>
-<div class="say"><p>Specific observations help.</p><p>Before you use the prompt, read through it.</p><p>Add anything the AI needs to know about your process.</p><p><strong class="key">The prompt builder gives you the structure. You give it the context.</strong></p></div>
+<ul class="beats"><li>The page.</li><li>Your FIND answers.</li><li>The friction you spotted.</li><li>The FIND Framework.</li><li>And the audit format we want.</li></ul>
+<div class="say"><p>Specific observations help.</p><p>What it doesn’t know is your member and their task.</p><p><strong class="key">So before you use the prompt, add who the member is and what they’re trying to do.</strong></p><p>Add anything else the AI needs to know about your process.</p><p><strong class="key">The prompt builder gives you the structure. You give it the context.</strong></p></div>
 <h3 class="beat">Audience Activity</h3>
 <div class="say"><p>Now try it with the page you picked earlier.</p><p><strong class="key">Take about two minutes and generate your own prompt.</strong></p></div>
 <p class="cue cue-act"><span>Allow two minutes</span></p>
@@ -532,9 +535,9 @@ body{background:var(--bg); color:var(--fg); font-family:var(--sans); font-size:1
 <p class="cue cue-act"><span>Take one or two volunteers</span></p>
 <div class="say"><p>Read us a little of what it generated.</p></div>
 <p class="cue cue-act"><span>Let them read a short section</span></p>
-<p class="ask"><span class="ask-tag">Ask</span>Does that prompt describe your member and what they’re trying to accomplish?</p>
-<p class="ask"><span class="ask-tag">Ask</span>Is there anything you’d add before you ran it?</p>
-<p class="ask"><span class="ask-tag">Ask</span>Did it point you toward something you already suspected, or something you hadn’t thought about?</p>
+<p class="ask"><span class="ask-tag">Ask</span>Who’s the member and what’s the task you’d add to it?</p>
+<p class="ask"><span class="ask-tag">Ask</span>Is there anything else you’d add before you ran it?</p>
+<p class="ask"><span class="ask-tag">Ask</span>Did scoring the page or picking the friction points make you notice something you hadn’t thought about before?</p>
 <p class="cue cue-act"><span>Take brief responses</span></p>
 <div class="say"><p><strong class="key">This is where our judgment comes in.</strong></p><p>The prompt is a starting point, not the final answer.</p><p>You can add context, sharpen the task, or tell AI about a constraint it didn’t know about.</p></div>
 <p class="transition"><span class="tr-tag">Transition</span>And once we have a process that works, we can make it easier to reuse.</p>
@@ -557,7 +560,7 @@ body{background:var(--bg); color:var(--fg); font-family:var(--sans); font-size:1
 <h3 class="beat">Scorecard caution</h3>
 <div class="say"><p>One caution about the scorecard.</p><p>The number itself isn’t the important part.</p><p>If AI says your page is a six out of ten, please don’t go home and announce: “Our website got a six.”</p><p><strong class="key">Read the explanation. The evidence behind the score is what matters.</strong></p></div>
 <p class="cue cue-pause"><span>Pause</span></p>
-<div class="say"><p>The prompt builder helps you create an individual audit.</p><p>The Skill helps you repeat a defined review process.</p><p><strong class="key">Both let you start small.</strong></p></div>
+<div class="say"><p>The prompt builder helps you create a prompt for one page.</p><p>The Skill helps you repeat a defined review process.</p><p><strong class="key">Both let you start small.</strong></p></div>
     <p class="next">Next · <b>21</b> What to Remember</p>
   </div>
 </section>
@@ -587,7 +590,7 @@ body{background:var(--bg); color:var(--fg); font-family:var(--sans); font-size:1
   <div class="slide-body">
     <h2 id="t22">Take the Toolkit With You</h2>
     <div class="say"><p>The framework, prompt builder, Skill notes, and supporting resources are all available through the session hub.</p><p>And when you get back, I don’t want you to redesign your whole website.</p><p><strong class="key">Start with the page you chose today.</strong></p></div>
-<ul class="beats"><li>Run the audit.</li><li>Review the findings.</li><li>Then make one improvement.</li></ul>
+<ul class="beats"><li>Run the prompt you built today.</li><li>Review the findings.</li><li>Then make one improvement.</li></ul>
 <div class="say"><p>Maybe it’s changing a vague link label.</p><p>Maybe it’s moving an important instruction.</p><p>Maybe it’s grouping resources differently.</p><p>Maybe it’s simply making the next step obvious.</p><p><strong class="key">Make one improvement. Learn from it. Then take what you learned to the next page.</strong></p></div>
     <p class="next">Next · <b>23</b> Closing and Questions</p>
   </div>
